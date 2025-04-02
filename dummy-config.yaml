@@ -1,0 +1,4 @@
+bot:
+  token: "YOUR BOT TOKEN"
+logging:
+  level: "info"
