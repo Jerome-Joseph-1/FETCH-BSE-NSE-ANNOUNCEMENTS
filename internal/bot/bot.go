@@ -25,8 +25,9 @@ func New(cfg *config.Config) (*Bot, error) {
 	}, nil
 }
 
-func (b *Bot) Start() error {
+func (b *Bot) Start(cfg *config.Config) error {
 	b.Session.AddHandler(handlers.Ready)
+	b.Session.AddHandler(handlers.ChannelMonitorHandler(cfg))
 
 	return b.Session.Open()
 }

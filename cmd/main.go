@@ -27,7 +27,7 @@ func main() {
 		logger.Error.Fatalf("Failed to create bot: %v", err)
 	}
 
-	if err := b.Start(); err != nil {
+	if err := b.Start(cfg); err != nil {
 		logger.Error.Fatalf("Failed to start bot: %v", err)
 	}
 

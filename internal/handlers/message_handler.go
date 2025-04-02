@@ -1,30 +1,31 @@
 package handlers
 
 import (
-	"JeromeJoseph/discord-bot/internal/commands"
+	"JeromeJoseph/discord-bot/config"
+	"JeromeJoseph/discord-bot/internal/logger"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
 )
 
-func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if m.Author.ID == s.State.User.ID {
-		return
-	}
-
-	prefix := "!"
-	if strings.HasPrefix(m.Content, prefix) {
-		content := strings.TrimPrefix(m.Content, prefix)
-		args := strings.Fields(content)
-		if len(args) == 0 {
+func ChannelMonitorHandler(cfg *config.Config) func(s *discordgo.Session, m *discordgo.MessageCreate) {
+	return func(s *discordgo.Session, m *discordgo.MessageCreate) {
+		if m.Author.ID == s.State.User.ID {
 			return
 		}
 
-		commandName := args[0]
-		args = args[1:]
-
-		if handler := commands.GetCommand(commandName); handler != nil {
-			handler(s, m, args)
+		if m.ChannelID != cfg.Bot.Channel_ID {
+			return
 		}
+
+		logger.Info.Printf("Message received in channel: %s", m.Content)
+
+		processMessage(s, m)
+	}
+}
+
+func processMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
+	if strings.HasPrefix(m.Content, "!help") {
+		s.ChannelMessageSend(m.ChannelID, "YOU ARE BEING HELPED")
 	}
 }
