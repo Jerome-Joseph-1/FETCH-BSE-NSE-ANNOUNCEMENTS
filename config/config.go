@@ -8,8 +8,9 @@ import (
 
 type Config struct {
 	Bot struct {
-		Token      string `yaml:"token"`
-		Channel_ID string `yaml:"monitor_channel"`
+		Token             string `yaml:"token"`
+		Channel_ID        string `yaml:"monitor_channel"`
+		Button_Channel_ID string `yaml: "button_channel"`
 	} `yaml:"bot"`
 	Logging struct {
 		Level string `yaml:"level"`

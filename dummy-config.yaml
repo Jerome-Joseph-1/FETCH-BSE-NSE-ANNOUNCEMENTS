@@ -1,5 +1,6 @@
 bot:
   token: "YOUR BOT TOKEN"
   monitor_channel: "CHANNEL ID"
+  button_channel: "CHANNEL ID"
 logging:
   level: "info"
